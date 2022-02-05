@@ -3,6 +3,7 @@
 
 
 
+
 /*---------------------------- Variables (state) ----------------------------*/
 let squares = []
 let turn
@@ -10,7 +11,7 @@ let isWinner
 
 
 /*------------------------ Cached Element References ------------------------*/
-const sq = Array.from(document.querySelectorAll('.sq'))
+const sq = document.querySelectorAll('.sq')
 // console.log(sq)
 const statusMessage = document.querySelector('#message')
 // console.log(statusMessage)
@@ -26,25 +27,25 @@ function init(){
   squares = [null, null, null, null, null, null, null, null, null]
   turn = 1
   isWinner = null
+  render()
+}
   //3.2.3 Initialize the winner variable to null.
 	// This represents that there is no winner or tie yet. 
 	// The winner variable will hold the player value (1 or -1) if there's a winner. 
 	// The winner will hold a 'T' if there's a tie. */
-  render()
-}
+ 
 
-
-const winningArrays = [
-  [squares[0], squares[1], squares[2]],
-  [squares[3], squares[4], squares[5]],
-  [squares[6], squares[7], squares[8]],
-  [squares[0], squares[3], squares[6]],
-  [squares[1], squares[4], squares[7]],
-  [squares[2], squares[5], squares[8]],
-  [squares[0], squares[4], squares[8]],
-  [squares[2], squares[4], squares[6]]
   
-]
+  let  winningArrays = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6]
+  ]
 
 
 function render(){
@@ -57,10 +58,11 @@ function render(){
   }
 
   // If winner has a value other than null (game still in progress), render whose turn it 
+
   if (!isWinner && turn === 1) {
-    statusMessage.textContent = 'It is Player 1 turn'
+    statusMessage.textContent = `It is Player X's turn`
   } else if(!isWinner && turn === -1){
-    statusMessage.textContent = 'It is Player 2 turn'
+    statusMessage.textContent = `It is Player O's turn`
   } else if (isWinner === 1) {
     statusMessage.textContent = `Player X WON!`
   } else if (isWinner === -1) {
@@ -90,13 +92,14 @@ function handleClick(evt) {
     squares[clickedIndex] = turn
     turn = turn * -1
   
-    console.log(squares)
-    render()
-    // getWinner()
-    return squares
+    // console.log(squares[clickedIndex])
+    // console.log(winningArrays)
     
-  }
+    render()
+    getWinner()
 
+
+  }
 
 // 5.2) If the board has a value at the index, immediately return because that square is already taken.
 // 5.3) If winner is not null, immediately return because the game is over.
@@ -108,19 +111,26 @@ function handleClick(evt) {
 	// 5.6) Set the winner variable if there's a winner by calling a new function: getWinner.
 	  // The getWinner function will...
 
+    function getWinner(){
 
+      for(let i = 0; i < winningArrays.length; i++){
+        const combo = winningArrays[i]
+        const a = combo[0]
+        const b = combo[1]
+        const c = combo[2]
+        // console.log(a)
+        if(squares[a]===1 && squares[b]===1 && squares[c]===1){
+          isWinner = 1
+          render()
 
-
-// function getWinner(){
-//   for(let i = 0; i < winningArrays.length; i++){
-//     for(let j = 0; j < winningArrays[i].length; j++){
-//       if(winningArrays[i][j] === 1 || winningArrays[i][j] === -1){
-//         console.log('print')
-//       }
-//     }
-//   } 
-// }
-    
+          // console.log(isWinner)
+          
+        } else if(squares[a]===-1 && squares[b]===-1 && squares[c]===-1){
+          isWinner = -1
+          render()
+        }
+      }
+    }
 
 
 // 5.6.1.1) Loop through the each of the winning combination arrays defined.
@@ -128,5 +138,13 @@ function handleClick(evt) {
 		  // 5.6.1.3) Convert the total to an absolute value (convert any negative total to positive).
 		  // 5.6.1.4) If the total equals 3, we have a winner! Set the winner variable to the board's value at the index specified by the first index of that winning combination's array by returning that value.
 
+
+          // for(let i = 0; i < winningArrays.length; i++){
+      //   for(let j = 0; j < winningArrays[i].length; j++){
+      //     if(winningArrays[i][j] === 1 || winningArrays[i][j] === -1){
+      //       console.log(winningArrays[i][j])
+      //     }
+      //   }
+      // }
 
  
