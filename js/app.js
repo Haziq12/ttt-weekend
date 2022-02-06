@@ -115,22 +115,43 @@ function handleClick(evt) {
 
       for(let i = 0; i < winningArrays.length; i++){
         const combo = winningArrays[i]
+        // console.log(combo)
         const a = combo[0]
         const b = combo[1]
         const c = combo[2]
         // console.log(a)
-        if(squares[a]===1 && squares[b]===1 && squares[c]===1){
+
+        if(squares[a]+squares[b]+squares[c] === 3) {
           isWinner = 1
           render()
-
-          // console.log(isWinner)
-          
-        } else if(squares[a]===-1 && squares[b]===-1 && squares[c]===-1){
+        } else if(Math.abs(squares[a]+squares[b]+squares[c]) === 3) {
           isWinner = -1
           render()
+        } else if (isWinner != 1 && isWinner != -1 && (squares[0] && squares[1] && squares[2] && squares[3] && squares[4] && squares[5] && squares[6] && squares[7] && squares[8]) !== null){
+          isWinner = 'T'
+          render()
         }
+
       }
-    }
+
+
+
+        // if(squares[a]===1 && squares[b]===1 && squares[c]===1){
+        //   isWinner = 1
+        //   render()
+
+        //   // console.log(isWinner)
+          
+        // } else if(squares[a]===-1 && squares[b]===-1 && squares[c]===-1){
+        //   isWinner = -1
+        //   render()
+        // } 
+        // else if(squares[0] && squares[1] && squares[2] && squares[3] && squares[4] && squares[5] && squares[6] && squares[7] && squares[8] !== ) { 
+        //   isWinner = 'T'
+        //   render()
+        // }
+      }
+    
 
 
 // 5.6.1.1) Loop through the each of the winning combination arrays defined.
