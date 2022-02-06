@@ -15,13 +15,18 @@ const sq = document.querySelectorAll('.sq')
 // console.log(sq)
 const statusMessage = document.querySelector('#message')
 // console.log(statusMessage)
+const replayButton = document.getElementById('Replay')
+// console.log(replayButton)
 
 /*----------------------------- Event Listeners -----------------------------*/
 
 sq.forEach(square => square.addEventListener('click', handleClick))
+replayButton.addEventListener('click', replay)
 
 /*-------------------------------- Functions --------------------------------*/
 init()
+
+
 
 function init(){
   squares = [null, null, null, null, null, null, null, null, null]
@@ -60,15 +65,15 @@ function render(){
   // If winner has a value other than null (game still in progress), render whose turn it 
 
   if (!isWinner && turn === 1) {
-    statusMessage.textContent = `It is Player X's turn`
+    statusMessage.textContent = `X's turn!`
   } else if(!isWinner && turn === -1){
-    statusMessage.textContent = `It is Player O's turn`
+    statusMessage.textContent = `O, let's go!`
   } else if (isWinner === 1) {
-    statusMessage.textContent = `Player X WON!`
+    statusMessage.textContent = `X is the WINNER!`
   } else if (isWinner === -1) {
-    statusMessage.textContent = `Player O WON!`
+    statusMessage.textContent = `O is the WINNER!`
   } else if (isWinner === 'T') {
-    statusMessage.textContent = 'Its a TIE!'
+    statusMessage.textContent = `It's a TIE!`
   }
 }
 
@@ -100,6 +105,9 @@ function handleClick(evt) {
 
 
   }
+
+
+
 
 // 5.2) If the board has a value at the index, immediately return because that square is already taken.
 // 5.3) If winner is not null, immediately return because the game is over.
@@ -168,4 +176,8 @@ function handleClick(evt) {
       //   }
       // }
 
+
+function replay(){
+  init()
+}
  
